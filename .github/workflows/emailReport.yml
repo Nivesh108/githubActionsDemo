@@ -6,13 +6,21 @@ on:
       - main  # Trigger workflow on push events to the main branch
 
 jobs:
-  show_commit_info:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    show_commit_info:
+        runs-on: ubuntu-latest
       
-      - name: Show Last Commit Info
-        run: |
-          git log -1 --pretty=format:"Last commit by %an on %cd: %s" --date=local
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v2
+            
+            - name: Show Last Commit Info
+              run: |
+                git log -1 --pretty=format:"Last commit by %an on %cd: %s" --date=local
+            
+            - name: Calculate Time Difference
+              id: time_diff
+              run: |
+                LAST_COMMIT_DATE=$(git log -1 --format=%at)
+                CURRENT_DATE=$(date +%s)
+                TIME_DIFF=$((CURRENT_DATE - LAST_COMMIT_DATE))
+                echo "Time difference since last commit: $TIME_DIFF seconds"
