@@ -1,16 +1,20 @@
 name: Experiment
 on: 
-  schedule:
-  - cron: '*/5 * * * *'
+    schedule:
+    - cron: '*/5 * * * *'
+    workflow_dispatch:
 
 jobs:
-  job1:
-    name: Debug
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Git checkout
-      uses: actions/checkout@v2
-      with: { ref: debug }
-    - name: List files
-      run: ls
+    check_commits:
+        runs-on: ubuntu-latest
+    
+        steps:
+          - name: Check Commits
+            uses: actions/checkout@v2
+            run: |
+              LAST_COMMIT_DATE=$(git log -1 --format=%at)
+              CURRENT_HOUR=$(date +%H)
+              echo  "Last commit date is $LAST_COMMIT_DATE"
+              if [ "$CURRENT_HOUR" -ge "18" ]; then
+                echo "No commits today by 6 PM."  # You can modify this to send an email
+              fi
