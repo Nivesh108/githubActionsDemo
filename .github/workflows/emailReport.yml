@@ -1,25 +1,18 @@
-name: Experiment
-on: 
-    schedule:
-    - cron: '*/5 * * * *'
-    workflow_dispatch:
+name: Show Last Commit Info
+
+on:
+  push:
+    branches:
+      - main  # Trigger workflow on push events to the main branch
 
 jobs:
-    check_commits:
-        runs-on: ubuntu-latest
-    
-        steps:
-          - name: Check Commits
-            run: |
-                LAST_COMMIT_DATE=$(git log -1 --format=%at)
-                CURRENT_HOUR=$(date -u +%H)
-                echo  "Last commit date was $LAST_COMMIT_DATE"
-                echo   "Current hour is $CURRENT_HOUR"
-                
+  show_commit_info:
+    runs-on: ubuntu-latest
 
-                if [ "$CURRENT_HOUR" -ge "18" ]; then
-                echo "No commits today by 6 PM."
-
-                # Send email notification (replace with your email sending command)
-                echo "There have been no commits today by 6 PM UTC." | mail -s "No Commits Today" your_email@example.com
-                fi
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Show Last Commit Info
+        run: |
+          git log -1 --pretty=format:"Last commit by %an on %cd: %s" --date=local
