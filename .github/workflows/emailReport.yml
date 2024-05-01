@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # Trigger workflow on push events to the main branch
+  workflow_dispatch:
 
 jobs:
     show_commit_info:
