@@ -7,10 +7,10 @@ on:
   workflow_dispatch:
 
 jobs:
-    show_commit_info:
-        runs-on: ubuntu-latest
+        show_commit_info:
+          runs-on: ubuntu-latest
       
-        steps:
+          steps:
             - name: Checkout Repository
               uses: actions/checkout@v2
             
@@ -25,3 +25,13 @@ jobs:
                 CURRENT_DATE=$(date +%s)
                 TIME_DIFF=$((CURRENT_DATE - LAST_COMMIT_DATE))
                 echo "Time difference since last commit: $TIME_DIFF seconds"
+      
+            - name: Send Email if Time Difference > 1 minute
+              if: ${{ steps.time_diff.outputs.TIME_DIFF > 60 }}  # Only run this step if time difference > 60 seconds
+              run: |
+                if [ $((TIME_DIFF > 60)) -eq 1 ]; then
+                  echo "Sending email notification..."
+                  echo "There have been no commits in the last 1 minute." | mail -s "No Commits in Last Minute" sharmanivesh08@gmail.com
+                else
+                  echo "No need to send email."
+                fi
