@@ -27,7 +27,7 @@ jobs:
                 echo "Time difference since last commit: $TIME_DIFF seconds"
       
             - name: Send Email if Time Difference > 1 minute
-              if: ${{ steps.time_diff.outputs.TIME_DIFF > 60 }}  # Only run this step if time difference > 60 seconds
+              
               run: |
                 if [ $((TIME_DIFF > 60)) -eq 1 ]; then
                   echo "Sending email notification..."
