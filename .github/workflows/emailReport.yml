@@ -29,9 +29,5 @@ jobs:
             - name: Send Email if Time Difference > 1 minute
               
               run: |
-                if [ $((TIME_DIFF > 60)) -eq 1 ]; then
                   echo "Sending email notification..."
                   echo "There have been no commits in the last 1 minute." | mail -s "No Commits in Last Minute" sharmanivesh08@gmail.com
-                else
-                  echo "No need to send email."
-                fi
