@@ -27,7 +27,12 @@ jobs:
                 echo "Time difference since last commit: $TIME_DIFF seconds"
       
             - name: Send Email if Time Difference > 1 minute
-              
-              run: |
-                  echo "Sending email notification..."
-                  echo "There have been no commits in the last 1 minute." | mail -s "No Commits in Last Minute" sharmanivesh08@gmail.com
+              uses: dawidd6/action-send-mail@v3
+              with:
+                server_address: smtp.gmail.com  # Replace with your SMTP server address
+                server_port: 587  # Replace with your SMTP server port (e.g., 587 for TLS)
+                username: ${{ secrets.SMTP_USERNAME }}  # Add your SMTP username as a secret
+                password: ${{ secrets.SMTP_PASSWORD }}  # Add your SMTP password as a secret
+                subject: "No Commits in Last Minute"
+                body: "There have been no commits in the last 1 minute."
+                to: niveshtnp@gmail.com
