@@ -33,6 +33,7 @@ jobs:
                 server_port: 587  # Replace with your SMTP server port (e.g., 587 for TLS)
                 username: ${{ secrets.SMTP_USERNAME }}  # Add your SMTP username as a secret
                 password: ${{ secrets.SMTP_PASSWORD }}  # Add your SMTP password as a secret
+                from: sharmanivesh08@gmail.com
                 subject: "No Commits in Last Minute"
                 body: "There have been no commits in the last 1 minute."
                 to: niveshtnp@gmail.com
