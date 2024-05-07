@@ -8,7 +8,7 @@ on:
 
 jobs:
         show_commit_info:
-          runs-on: ubuntu-latest
+          runs-on: ubuntu-latest 
       
           steps:
             - name: Checkout Repository
@@ -29,10 +29,10 @@ jobs:
             - name: Send Email if Time Difference > 1 minute
               uses: dawidd6/action-send-mail@v3
               with:
-                server_address: smtp.gmail.com  # Replace with your SMTP server address
-                server_port: 587  # Replace with your SMTP server port (e.g., 587 for TLS)
-                username: ${{ secrets.SMTP_USERNAME }}  # Add your SMTP username as a secret
-                password: ${{ secrets.SMTP_PASSWORD }}  # Add your SMTP password as a secret
+                server_address: smtp.gmail.com 
+                server_port: 587  
+                username: ${{ secrets.SMTP_USERNAME }}  
+                password: ${{ secrets.SMTP_PASSWORD }}
                 from: sharmanivesh08@gmail.com
                 subject: "No Commits in Last Minute"
                 body: "There have been no commits in the last 1 minute."
